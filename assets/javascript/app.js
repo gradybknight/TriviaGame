@@ -8,14 +8,34 @@ var gameTimeRemaining = 10*10*1000;
 var countCorrect = 0;
 var countWrong =0;
 var questionIndex = 0;
+var triviaObject;
 
-function populateQuestionAndAnswers(triviaObject,questionIndex){
-    $('#questionDiv').html(triviaObject.question);
+function resetAnswerVariables(){
+    arrayOfDivsToPutAnswersIn=[1,2,3,4];
+    correctAnswerScreenIndex=0;
+}
+
+function testAnswer(){
+    var userAnswer = this.id;
+    if (userAnswer == correctAnswerScreenIndex){
+        console.log("correct");
+        countCorrect++;
+    } else {
+        console.log("wrong");
+        countWrong++;
+    }
+    questionIndex++
+    resetAnswerVariables();
+    populateQuestionAndAnswers();
+}
+
+function populateQuestionAndAnswers(){
+    $('#questionDiv').html(triviaObject.results[questionIndex].question);
     correctAnswerScreenIndex=Math.floor(Math.random()*4)+1;
-    $("#"+correctAnswerScreenIndex).html(triviaObject.correct_answer);
+    $("#"+correctAnswerScreenIndex).html(triviaObject.results[questionIndex].correct_answer);
     arrayOfDivsToPutAnswersIn=removeValueFromArray(correctAnswerScreenIndex,arrayOfDivsToPutAnswersIn);
     for (var i=0;i<arrayOfDivsToPutAnswersIn.length;i++){
-        $("#"+arrayOfDivsToPutAnswersIn[i]).html(triviaObject.incorrect_answers[i]);
+        $("#"+arrayOfDivsToPutAnswersIn[i]).html(triviaObject.results[questionIndex].incorrect_answers[i]);
     };
 }
 
@@ -26,8 +46,6 @@ function removeValueFromArray(theValue,theArray){
             newArray.push(theArray[i]);
         }
     }
-    console.log(theArray);
-    console.log(newArray);
     return newArray;
 }
 
@@ -40,6 +58,7 @@ function setLevel(){
     };
     hideTheHeader();
     getTheQuestions();
+    startGameTimer();
     
 }
 function hideTheHeader(){
@@ -56,9 +75,9 @@ function getTheQuestions(){
         method: "GET"
     }).then(function(response) {
         console.log(response);
-        console.log(response.results[0]);
-        var theResponse=response.results[Math.floor(Math.random()*response.results.length)];
-        populateQuestionAndAnswers(theResponse,questionIndex);
+        triviaObject=response;
+        // var theResponse=response.results[Math.floor(Math.random()*response.results.length)];
+        populateQuestionAndAnswers();
     });
 };
 
@@ -69,10 +88,11 @@ function startQuestionTimer(){
 function countDownTimer(){
     questionTimeRemaining=-1000;
     if (questionTimeRemaining<=0) {
-        countwrong++;
+        countWrong++;
         questionIndex++;
         clearInterval(questionTimer);
-        populateQuestionAndAnswers(triviaObject,questionIndex);
+        resetAnswerVariables();
+        populateQuestionAndAnswers();
         startQuestionTimer();
     }
 
@@ -88,20 +108,14 @@ function startGameTimer(){
 
 function gameTimer(){
     gameTimeRemaining=-1000;
+    console.log(gameTimeRemaining);
     if (gameTimeRemaining<=0) {
-        countwrong++;
+        countWrong++;
         clearInterval(gameTimer);
-
     }
-
 }
 
-function alertFunction(){
-    console.log(Date.now());
-}
-function testInterval(){
-    var intervalTester = window.setInterval(alertFunction,2000);
-}
-// testInterval();
-console.log("i'm waiting");
+
+
 $(document).on("click",".levelChoice",setLevel);
+$(document).on("click",".questionChoice",testAnswer);
