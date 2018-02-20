@@ -11,7 +11,7 @@
   <div class="container">
     <div class="row">
       <div id="theHeaderDiv">
-        <div id="Message">Let's play animal trivia. Choose a difficulty:</div>
+        <h1>Let's play animal trivia. Choose a difficulty:</h1>
         <div id="chooseLevelDiv">
           <div id="hard" class="levelChoice">Hard</div>
           <div id="medium" class="levelChoice">Medium</div>
@@ -21,16 +21,36 @@
     </div>
   </div>
   <div class="container">
-    <h1>Animal Trivia Time</h1>
-        <div id="theGameDiv">
-            <div id="questionDiv"></div>
-            <div id="1" class = "questionChoice">1</div>
-            <div id="2" class = "questionChoice">2</div>
-            <div id="3" class = "questionChoice">3</div>
-            <div id="4" class = "questionChoice">4</div>
+    <div class = "row">
+      <div id="questionsAndAnswerDiv">  
+        <h1>Animal Trivia</h1>
+            <div id="theGameDiv">
+                <H2 id="questionDiv"></h2>
+                <div id="1" class = "questionChoice">1</div>
+                <div id="2" class = "questionChoice">2</div>
+                <div id="3" class = "questionChoice">3</div>
+                <div id="4" class = "questionChoice">4</div>
+            </div>
         </div>
+      </div>
     </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <div class="container" id="timerDiv">
+    <div class = "row">
+      <div class="col-md-4" "col-lg-4">Question Time Remaining:</div>
+      <div class="col-md-2" "col-lg-2" id="questionTimeRemaining"></div>
+      <div class="col-md-4" "col-lg-4">Total Time Remaining:</div>
+      <div class="col-md-2" "col-lg-2" id="totalTimeRemaining"></div>
+    </div>
+  </div>
+  <div class="container" id="finalScoreDiv">
+      <div class = "row">
+        <div class="col-md-4" "col-lg-4">Questions Correct:</div>
+        <div class="col-md-2" "col-lg-2" id="correctDiv"></div>
+        <div class="col-md-4" "col-lg-4">Total Questions Answered:</div>
+        <div class="col-md-2" "col-lg-2" id="totalDiv"></div>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="./assets/javascript/app.js"></script>
   
   
