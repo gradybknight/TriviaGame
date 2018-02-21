@@ -101,6 +101,9 @@ function setLevel(){
         //stupid API sets default to easy and doesn't accept difficulty=easy ?!?!?
         queryURL = "https://opentdb.com/api.php?amount=10&category=27&type=multiple"
     };
+    questionIndex=0;
+    countCorrect=0;
+    countWrong=0;
     hideTheHeader();
     getTheQuestions();
     startGameTimer();
